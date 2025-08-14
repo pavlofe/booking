@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Room(models.Model):
@@ -18,3 +19,19 @@ class Room(models.Model):
     def __str__(self):
         return self.title
 
+class Booking(models.Model):
+    STATUS_CHOICES = [
+        ('wtn', 'Очікує підтвердження'),
+        ('cnf', 'Підтверджено'),
+        ('clc', 'Скасовано')
+    ]
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    check_in_date = models.DateTimeField()
+    check_out_date = models.DateTimeField()
+    email = models.EmailField()
+    status = models.CharField(max_length=20,choices=STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Booking for {self.room.title} from {self.check_in_date} to {self.check_out_date} by {self.user.username}"

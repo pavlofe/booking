@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from booking_app.models import Room, Bookings
+from booking_app.models import Room, Booking
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+@login_required
 def home(request):
-    rooms = Room.object.all()
-    return render(request, context={'rooms':rooms})
+    rooms = Room.objects.all()
+    return render(request,"index.html", context={'rooms':rooms})

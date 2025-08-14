@@ -20,7 +20,10 @@ from booking_project import settings
 from django.conf.urls.static import static
 from booking_app.views import*
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('booking_app.urls')),
+    path('', include('auth_system.urls')),
 ] 
+
